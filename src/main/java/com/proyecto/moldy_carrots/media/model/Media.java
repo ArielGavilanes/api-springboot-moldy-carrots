@@ -1,13 +1,9 @@
 package com.proyecto.moldy_carrots.media.model;
 
 import java.time.LocalDate;
-import java.util.List;
 
-import com.proyecto.moldy_carrots.genres.model.Genres;
 import com.proyecto.moldy_carrots.media_types_catalogue.model.MediaTypesCatalogue;
-import com.proyecto.moldy_carrots.reviews.model.Review;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -16,7 +12,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Size;
@@ -52,11 +47,6 @@ public class Media {
 
     @ManyToOne
     @JoinColumn(name = "typeId")
-    private MediaTypesCatalogue typeId; 
+    private MediaTypesCatalogue typeId;
 
-    @OneToMany(mappedBy = "mediaId", cascade = CascadeType.ALL)
-    private List<Review> reviews;
-
-    @OneToMany(mappedBy = "mediaId", cascade = CascadeType.ALL)
-    private List<Genres> genres;
 }

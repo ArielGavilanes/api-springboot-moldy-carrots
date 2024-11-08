@@ -1,20 +1,20 @@
 package com.proyecto.moldy_carrots.users.model;
 
-import jakarta.persistence.CascadeType;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.annotations.Type;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Size;
-import lombok.Data;
-import java.util.List;
+import java.sql.Types;
 
-import com.proyecto.moldy_carrots.reviews.model.Review;
+import lombok.Data;
 
 @Data
 @Entity
@@ -29,8 +29,8 @@ public class User {
     @Column(name = "username", nullable = false)
     private String username;
 
-    @Lob
-    @Column(name = "profileImage", nullable = false, columnDefinition = "bytea")
+    @JdbcTypeCode(Types.VARBINARY)
+    @Column(name = "profileImage", nullable = true, columnDefinition = "bytea")
     private byte[] profileImage;
 
     @Size(min = 1, max = 30)
@@ -49,6 +49,4 @@ public class User {
     @Column(name = "password", nullable = false)
     private String password;
 
-    @OneToMany(mappedBy = "userId", cascade = CascadeType.ALL) 
-    private List<Review> reviews;
 }

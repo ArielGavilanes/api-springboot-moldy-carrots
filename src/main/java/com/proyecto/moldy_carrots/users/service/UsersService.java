@@ -19,4 +19,8 @@ public class UsersService {
     public User validateIfUserIsNonExisting(String username) {
         return userRepository.findByUsername(username);
     }
+
+    public User findByUsername(String username) {
+        return userRepository.findByUsername(username); 
+    }
 }

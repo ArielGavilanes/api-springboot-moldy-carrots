@@ -1,34 +1,48 @@
-version: '3.8'
-
+version: "3.8"
 services:
-  backend:
+  moldycarrots:
     image: moldycarrots:1
     environment:
       - SPRING_PROFILES_ACTIVE=prod
     ports:
-      - target: 8080
-        published: 8080
+      - target: 9142
+        published: 9142
         protocol: tcp
         mode: host
     networks:
-      - desarrollo_net
-  dbclases:
+      - moldycarrots_net
+    deploy:
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.moldycarrots.entrypoints=http"
+        - "traefik.http.routers.emoldycarrotsva.rule=Host(`moldycarrots.byronrm.com`)"
+        - "traefik.http.middlewares.moldycarrots-https-redirect.redirectscheme.scheme=https"
+        - "traefik.http.routers.moldycarrots.middlewares=portainer-https-redirect"
+        - "traefik.http.routers.moldycarrots-secure.entrypoints=https"
+        - "traefik.http.routers.moldycarrots-secure.rule=Host(`moldycarrots.byronrm.com`)"
+        - "traefik.http.routers.moldycarrots-secure.tls=true"
+        - "traefik.http.routers.moldycarrots-secure.tls.certresolver=http"
+        - "traefik.http.routers.moldycarrots-secure.service=moldycarrots"
+        - "traefik.http.services.moldycarrots.loadbalancer.server.port=8080"
+        - "traefik.docker.network=traefik-public"
+
+  moldycarrotsdb:
     image: postgres:15.0-bullseye
     environment:
       - TZ=America/Guayaquil
-      - POSTGRES_DB=prueba
-      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=MoldyCarrots
+      - POSTGRES_PASSWORD=1234
       - POSTGRES_USER=postgres
       - PGDATA=/var/lib/postgresql/data/pgdata
     volumes:
-      - pg_tendencia_data:/var/lib/postgresql/data/pgdata
+      - pg_moldycarrots_data:/var/lib/postgresql/data/pgdata
     networks:
-      - desarrollo_net
+      - moldycarrots_net
 
 volumes:
-  pg_tendencia_data:
+  pg_moldycarrots_data:
     external: true
 
 networks:
-  desarrollo_net:
+  moldycarrots_net:
     external: true

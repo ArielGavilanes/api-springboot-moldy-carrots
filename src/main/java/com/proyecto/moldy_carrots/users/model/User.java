@@ -1,5 +1,9 @@
 package com.proyecto.moldy_carrots.users.model;
 
+import java.sql.Types;
+import java.util.Collection;
+import java.util.List;
+
 import org.hibernate.annotations.JdbcTypeCode;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -12,10 +16,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Size;
-import java.sql.Types;
-import java.util.Collection;
-import java.util.List;
-
 import lombok.Data;
 
 @Data

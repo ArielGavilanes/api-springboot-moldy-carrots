@@ -1,29 +1,30 @@
 version: "3.8"
 services:
-  moldycarrots:
+  application:
     image: moldycarrots:1
     environment:
       - SPRING_PROFILES_ACTIVE=prod
     ports:
-      - target: 9142
-        published: 9142
+      - target: 8093
+        published: 8093
         protocol: tcp
         mode: host
     networks:
       - moldycarrots_net
+      - traefik-public
     deploy:
       labels:
         - "traefik.enable=true"
-        - "traefik.http.routers.moldycarrots.entrypoints=http"
-        - "traefik.http.routers.emoldycarrotsva.rule=Host(`moldycarrots.byronrm.com`)"
-        - "traefik.http.middlewares.moldycarrots-https-redirect.redirectscheme.scheme=https"
-        - "traefik.http.routers.moldycarrots.middlewares=portainer-https-redirect"
-        - "traefik.http.routers.moldycarrots-secure.entrypoints=https"
-        - "traefik.http.routers.moldycarrots-secure.rule=Host(`moldycarrots.byronrm.com`)"
-        - "traefik.http.routers.moldycarrots-secure.tls=true"
-        - "traefik.http.routers.moldycarrots-secure.tls.certresolver=http"
-        - "traefik.http.routers.moldycarrots-secure.service=moldycarrots"
-        - "traefik.http.services.moldycarrots.loadbalancer.server.port=8080"
+        - "traefik.http.routers.application.entrypoints=http"
+        - "traefik.http.routers.application.rule=Host(`moldycarrots.byronrm.com`)"
+        - "traefik.http.middlewares.application-https-redirect.redirectscheme.scheme=https"
+        - "traefik.http.routers.application.middlewares=portainer-https-redirect"
+        - "traefik.http.routers.application-secure.entrypoints=https"
+        - "traefik.http.routers.application-secure.rule=Host(`moldycarrots.byronrm.com`)"
+        - "traefik.http.routers.application-secure.tls=true"
+        - "traefik.http.routers.application-secure.tls.certresolver=http"
+        - "traefik.http.routers.application-secure.service=application"
+        - "traefik.http.services.application.loadbalancer.server.port=8080"
         - "traefik.docker.network=traefik-public"
 
   moldycarrotsdb:
@@ -45,4 +46,7 @@ volumes:
 
 networks:
   moldycarrots_net:
+    external: true
+
+  traefik-public:
     external: true

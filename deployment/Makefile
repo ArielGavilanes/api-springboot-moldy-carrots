@@ -2,7 +2,7 @@ build-image:
         @ docker build -f Dockerfile -t moldycarrots:1 .
 
 deploy:
-        @ docker stack deploy --with-registry-auth -c stack.yml moldycarrots_backend
+        @ docker stack deploy --with-registry-auth -c docker-compose.yml moldycarrots_backend
 
 rm:
         @ docker stack rm moldycarrots_backend

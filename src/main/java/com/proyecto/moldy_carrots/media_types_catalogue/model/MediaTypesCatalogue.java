@@ -10,7 +10,7 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "media types catalogue")
+@Table(name = "media_types_catalogue")
 public class MediaTypesCatalogue {
 
     @Id

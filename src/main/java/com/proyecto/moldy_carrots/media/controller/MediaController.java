@@ -1,11 +1,14 @@
 package com.proyecto.moldy_carrots.media.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -58,6 +61,23 @@ public class MediaController {
         Media newMedia = mediaService.createMedia(media);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(newMedia);
-
     }
+
+    @GetMapping("/between")
+    @ResponseBody
+    public List<Media> findByReleaseDateBetween() {
+        return mediaService.findByReleaseDateBetween();
+    }
+
+    @GetMapping("/{mediaId}")
+    @ResponseBody
+    public ResponseEntity<Media> findById(@PathVariable long mediaId) {
+        Media media = mediaService.findById(mediaId);
+
+        if (media == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        return ResponseEntity.ok(media);
+    }
+
 }

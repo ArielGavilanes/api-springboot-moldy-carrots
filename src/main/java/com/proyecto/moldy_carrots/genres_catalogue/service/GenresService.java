@@ -15,4 +15,8 @@ public class GenresService {
     public GenreCatalogue getGenreById(long id) {
         return genreCatalogueRepository.findById(id).orElse(null);
     }
+
+    public GenreCatalogue createGenre(GenreCatalogue newGenre) {
+        return genreCatalogueRepository.save(newGenre);
+    }
 }

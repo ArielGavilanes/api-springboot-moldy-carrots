@@ -14,4 +14,8 @@ public class MediaTypesService {
     public MediaTypesCatalogue getMediaTypeById(long id) {
         return mediaTypesCatalogueRepository.findById(id).orElse(null);
     }
+
+    public MediaTypesCatalogue createType(MediaTypesCatalogue newType) {
+        return mediaTypesCatalogueRepository.save(newType);
+    }
 }

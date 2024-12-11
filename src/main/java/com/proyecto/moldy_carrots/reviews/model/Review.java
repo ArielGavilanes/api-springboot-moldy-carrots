@@ -25,11 +25,11 @@ public class Review {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long reviewId;
 
-    @Size(min = 255, max = 500)
+    @Size(min = 10, max = 500)
     @Column(name = "review", nullable = false)
     private String review;
 
-    @Min(value = 1)
+    @Min(value = 0)
     @Max(value = 5)
     @Column(name = "score", nullable = false)
     private Integer score;

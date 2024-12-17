@@ -1,5 +1,7 @@
 package com.proyecto.moldy_carrots.genres_catalogue.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,11 +14,27 @@ public class GenresService {
     @Autowired
     private GenreCatalogueRepository genreCatalogueRepository;
 
-    public GenreCatalogue getGenreById(long id) {
+    public GenreCatalogue findGenreById(long id) {
         return genreCatalogueRepository.findById(id).orElse(null);
+    }
+
+    public List<GenreCatalogue> findAllGenres() {
+        return genreCatalogueRepository.findAll();
     }
 
     public GenreCatalogue createGenre(GenreCatalogue newGenre) {
         return genreCatalogueRepository.save(newGenre);
     }
+
+    public GenreCatalogue updateGenre(long genreId, GenreCatalogue genreDetails) {
+        GenreCatalogue genre = findGenreById(genreId);
+        genre.setName(genreDetails.getName());
+        return genreCatalogueRepository.save(genre);
+    }
+
+    public void deleteGenre(long genreId) {
+        GenreCatalogue genre = findGenreById(genreId);
+        genreCatalogueRepository.delete(genre);
+    }
+
 }

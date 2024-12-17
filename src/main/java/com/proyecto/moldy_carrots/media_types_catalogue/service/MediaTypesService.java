@@ -1,5 +1,7 @@
 package com.proyecto.moldy_carrots.media_types_catalogue.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,5 +19,20 @@ public class MediaTypesService {
 
     public MediaTypesCatalogue createType(MediaTypesCatalogue newType) {
         return mediaTypesCatalogueRepository.save(newType);
+    }
+
+    public MediaTypesCatalogue updateMediaType(long typeId, MediaTypesCatalogue mediaDetails) {
+        MediaTypesCatalogue mediaType = getMediaTypeById(typeId);
+        mediaType.setName(mediaDetails.getName());
+        return mediaTypesCatalogueRepository.save(mediaType);
+    }
+
+    public void deleteMediaType(long typeId) {
+        MediaTypesCatalogue mediaType = getMediaTypeById(typeId);
+        mediaTypesCatalogueRepository.delete(mediaType);
+    }
+
+    public List<MediaTypesCatalogue> findAllMediaTypes() {
+        return mediaTypesCatalogueRepository.findAll();
     }
 }

@@ -2,7 +2,6 @@ package com.proyecto.moldy_carrots.reviews.dto;
 
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
@@ -15,6 +14,5 @@ public class ReviewDTO {
     @Max(value = 5, message = "Score must be at most 5.")
     private Integer score;
 
-    @NotNull(message = "Media ID cannot be null.")
     private long mediaId;
 }

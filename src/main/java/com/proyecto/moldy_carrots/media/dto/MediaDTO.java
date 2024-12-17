@@ -28,14 +28,11 @@ public class MediaDTO {
 
     private Float rating;
 
-    @NotNull(message = "The release date cannot be null")
     @Past(message = "The release date must be in the past")
     private LocalDate releaseDate;
 
-    @NotNull(message = "The media type cannot be null")
     private Long typeId;
 
-    @NotNull(message = "The genre type cannot be null")
     private Long genreId;
 
 }

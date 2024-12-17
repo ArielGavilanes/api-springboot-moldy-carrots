@@ -1,20 +1,21 @@
-package com.proyecto.moldy_carrots.auth.dto;
+package com.proyecto.moldy_carrots.users.dto;
 
 import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 @Data
-public class RegisterDTO {
+public class UserDTO {
     @NotBlank
     @Size(min = 5, max = 15, message = "Username must be between 5 and 15 characters")
     private String username;
 
-    // @NotNull(message = "Profile image is required")
+    @NotNull(message = "Profile image is required")
     private MultipartFile profileImage;
 
     @NotBlank

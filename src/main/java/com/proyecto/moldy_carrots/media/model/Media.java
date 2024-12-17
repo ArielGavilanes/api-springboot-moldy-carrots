@@ -41,7 +41,7 @@ public class Media {
     @Column(name = "description", nullable = false)
     private String description;
 
-    @Column(name = "rating", nullable = false, columnDefinition = "float default 0.0")
+    @Column(name = "rating", nullable = false, columnDefinition = "float")
     private Float rating;
 
     @Past

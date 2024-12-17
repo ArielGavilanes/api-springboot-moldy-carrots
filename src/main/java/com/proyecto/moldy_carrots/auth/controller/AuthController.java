@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -40,11 +40,14 @@ public class AuthController {
     @PostMapping("/register")
     @ResponseBody
     public ResponseEntity<User> registerUser(@Valid @ModelAttribute RegisterDTO userDto,
-            @RequestParam("profileImage") MultipartFile profileImage) throws IOException, BadRequestException {
+            @RequestPart(value = "profileImage", required = false) MultipartFile profileImage)
+            throws IOException, BadRequestException {
 
         User user = new User();
         user.setUsername(userDto.getUsername());
-        user.setProfileImage(profileImage.getBytes());
+        if (profileImage != null) {
+            user.setProfileImage(profileImage.getBytes());
+        }
         user.setName(userDto.getName());
         user.setLastname(userDto.getLastname());
         user.setEmail(userDto.getEmail());

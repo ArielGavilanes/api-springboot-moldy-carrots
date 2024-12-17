@@ -9,13 +9,13 @@ import org.springframework.stereotype.Service;
 import com.proyecto.moldy_carrots.auth.dto.LoginDTO;
 import com.proyecto.moldy_carrots.exception.BadRequestException;
 import com.proyecto.moldy_carrots.users.model.User;
-import com.proyecto.moldy_carrots.users.service.UsersService;
+import com.proyecto.moldy_carrots.users.service.UserService;
 
 @Service
 public class AuthService {
 
     @Autowired
-    private UsersService usersService;
+    private UserService userService;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -24,7 +24,7 @@ public class AuthService {
     private AuthenticationManager authenticationManager;
 
     public User registerUser(User newUser) throws BadRequestException {
-        User existingUser = usersService.validateIfUserIsNonExisting(newUser.getUsername());
+        User existingUser = userService.validateIfUserIsNonExisting(newUser.getUsername());
         if (existingUser != null) {
             throw new BadRequestException("User already registered");
         }
@@ -32,18 +32,18 @@ public class AuthService {
         String encryptedPassword = passwordEncoder.encode(newUser.getPassword());
         newUser.setPassword(encryptedPassword);
 
-        return usersService.createUser(newUser);
+        return userService.createUser(newUser);
     }
 
     public User loginUser(LoginDTO userDetails) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(userDetails.getUsername(), userDetails.getPassword()));
 
-        return usersService.findByUsername(userDetails.getUsername());
+        return userService.findByUsername(userDetails.getUsername());
     }
 
     public User getProfile(String username) {
-        return usersService.findByUsername(username);
+        return userService.findByUsername(username);
     }
 
 }
